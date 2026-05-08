@@ -1,4 +1,4 @@
-import { ChevronRight } from 'lucide-react';
+import React from 'react';
 
 interface ApplicationsProps {
   onNavigate: (page: string) => void;
@@ -45,83 +45,80 @@ const apps = [
 
 export default function Applications({ onNavigate }: ApplicationsProps) {
   return (
-    <div className="bg-white pt-16">
-      <div className="bg-[#0a1628] py-14 px-6 relative overflow-hidden">
+    <div className="pt-20">
+      {/* Hero */}
+      <div className="page-hero bg-gradient-dark">
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-10"
-          style={{ backgroundImage: "url('https://images.pexels.com/photos/1262304/pexels-photo-1262304.jpeg?auto=compress&cs=tinysrgb&w=1200')" }}
+          className="page-hero-overlay"
+          style={{
+            backgroundImage: "url('https://images.pexels.com/photos/1262304/pexels-photo-1262304.jpeg?auto=compress&cs=tinysrgb&w=1200')",
+          }}
         />
-        <div className="relative max-w-7xl mx-auto">
-          <p className="text-blue-400 text-xs tracking-widest uppercase mb-2">
-            <button onClick={() => onNavigate('home')} className="hover:text-white">Home</button>
+        <div className="container page-hero-content">
+          <p className="small text-primary text-uppercase mb-2" style={{ letterSpacing: '1px' }}>
+            <button onClick={() => onNavigate('home')} className="breadcrumb-link">
+              Home
+            </button>
             {' / Applications'}
           </p>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white">Applications</h1>
+          <h1 className="text-white display-4 font-weight-bolder">Applications</h1>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="text-center mb-12">
-          <p className="text-blue-600 text-sm font-semibold tracking-widest uppercase mb-2">Industry Verticals</p>
-          <h2 className="text-3xl font-extrabold text-gray-900">
-            Where Our <span className="text-blue-600">Solutions Are Applied</span>
-          </h2>
-        </div>
+      {/* Content */}
+      <div className="section py-16">
+        <div className="container">
+          {/* Intro */}
+          <div className="services-intro mb-12">
+            <p className="subheading">Industry Verticals</p>
+            <h2>
+              Where Our <span className="highlight">Solutions Are Applied</span>
+            </h2>
+          </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {apps.map((app) => (
-            <div key={app.title} className="group border border-gray-200 rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300">
-              <div className="h-44 overflow-hidden">
-                <img
-                  src={app.img}
-                  alt={app.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
+          {/* Apps grid */}
+          <div className="grid grid-cols-2 sm-grid-cols-2 lg-grid-cols-3 gap-6 mb-16">
+            {apps.map((app) => (
+              <div key={app.title} className="application-card">
+                <div className="application-card-img">
+                  <img src={app.img} alt={app.title} />
+                </div>
+                <div className="application-card-body">
+                  <h3>{app.title}</h3>
+                  <p className="desc">{app.desc}</p>
+                  <ul className="application-list">
+                    {app.items.map((item) => (
+                      <li key={item}>
+                        <i className="fas fa-chevron-right"></i>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-              <div className="p-6">
-                <h3 className="text-gray-900 font-extrabold text-lg mb-2">{app.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed mb-4">{app.desc}</p>
-                <ul className="space-y-1">
-                  {app.items.map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-xs text-gray-600">
-                      <ChevronRight className="w-3 h-3 text-blue-500 flex-shrink-0" /> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
 
-        <div className="bg-[#0a1628] rounded-2xl p-10 text-center">
-          <h3 className="text-2xl font-extrabold text-white mb-3">Have a Specific Application?</h3>
-          <p className="text-gray-400 mb-6">Our engineers can design custom solutions for your unique requirements.</p>
-          <button
-            onClick={() => onNavigate('contact')}
-            className="bg-blue-600 hover:bg-blue-500 text-white font-bold px-10 py-3.5 rounded tracking-wide uppercase text-sm transition-colors"
-          >
-            Discuss Your Application
+          {/* CTA */}
+          <div className="cta-dark">
+            <h3>Have a Specific Application?</h3>
+            <p>Our engineers can design custom solutions for your unique requirements.</p>
+            <button onClick={() => onNavigate('contact')} className="btn btn-primary">
+              Discuss Your Application
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="footer">
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
+          <p className="text-muted small">&copy; 2024 Microline India. All rights reserved.</p>
+          <button onClick={() => onNavigate('contact')} className="btn btn-primary">
+            Contact Us
           </button>
         </div>
-      </div>
-
-      <Footer onNavigate={onNavigate} />
+      </footer>
     </div>
-  );
-}
-
-function Footer({ onNavigate }: { onNavigate: (p: string) => void }) {
-  return (
-    <footer className="bg-[#0a1628] text-gray-300 mt-8">
-      <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="text-gray-500 text-xs">&copy; 2024 Microline India. All rights reserved.</p>
-        <button
-          onClick={() => onNavigate('contact')}
-          className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-6 py-2.5 rounded tracking-wide uppercase transition-colors"
-        >
-          Contact Us
-        </button>
-      </div>
-    </footer>
   );
 }

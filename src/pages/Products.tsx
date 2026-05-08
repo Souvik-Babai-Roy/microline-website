@@ -1,4 +1,4 @@
-import { ChevronRight, Eye } from 'lucide-react';
+import { useState } from 'react';
 
 interface ProductsProps {
   onNavigate: (page: string, data?: unknown) => void;
@@ -95,87 +95,94 @@ export const productData = [
 const categories = ['All', 'Microwave Test Systems', 'Antennas', 'Waveguides & Accessories'];
 
 export default function Products({ onNavigate }: ProductsProps) {
+  const [activeCategory, setActiveCategory] = useState('All');
+
+  const filtered =
+    activeCategory === 'All'
+      ? productData
+      : productData.filter((p) => p.category === activeCategory);
+
   return (
-    <div className="bg-white pt-16">
+    <div className="pt-20">
       {/* Hero */}
-      <div className="bg-[#0a1628] py-14 px-6 relative overflow-hidden">
+      <div className="page-hero bg-gradient-dark">
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-10"
-          style={{ backgroundImage: "url('https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=1200')" }}
+          className="page-hero-overlay"
+          style={{
+            backgroundImage:
+              "url('https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=1200')",
+          }}
         />
-        <div className="relative max-w-7xl mx-auto">
-          <p className="text-blue-400 text-xs tracking-widest uppercase mb-2">
-            <button onClick={() => onNavigate('home')} className="hover:text-white">Home</button>
+        <div className="container page-hero-content">
+          <p className="small text-primary text-uppercase mb-2" style={{ letterSpacing: '1px' }}>
+            <button onClick={() => onNavigate('home')} className="breadcrumb-link">
+              Home
+            </button>
             {' / Products'}
           </p>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white">Our Products</h1>
+          <h1 className="text-white display-4 font-weight-bolder">Our Products</h1>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        {/* Category tabs */}
-        <div className="flex flex-wrap gap-3 mb-10">
-          {categories.map((cat) => (
-            <button
-              key={cat}
-              className="px-5 py-2 rounded-full border border-blue-200 text-sm font-semibold text-blue-700 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all duration-200"
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
+      <div className="section py-16">
+        <div className="container">
+          {/* Category Filters */}
+          <div className="category-filters">
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`filter-btn${cat === activeCategory ? ' active' : ''}`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
 
-        {/* Product grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {productData.map((product) => (
-            <div
-              key={product.id}
-              className="group bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
-            >
-              <div className="h-48 overflow-hidden relative">
-                <img
-                  src={product.img}
-                  alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-                <div className="absolute top-3 left-3">
-                  <span className="bg-blue-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                    {product.category}
-                  </span>
+          {/* Product Grid */}
+          <div className="grid sm-grid-cols-2 lg-grid-cols-3 gap-8">
+            {filtered.map((product) => (
+              <div key={product.id} className="product-card">
+                <div className="product-card-img">
+                  <img src={product.img} alt={product.name} />
+                  <span className="product-badge">{product.category}</span>
+                </div>
+                <div className="product-card-body">
+                  <h3>{product.name}</h3>
+                  <p className="desc">{product.desc}</p>
+                  <button
+                    onClick={() => onNavigate('product-detail', product)}
+                    className="view-details-btn"
+                  >
+                    <i className="fas fa-eye"></i> View Details{' '}
+                    <i className="fas fa-chevron-right"></i>
+                  </button>
                 </div>
               </div>
-              <div className="p-5">
-                <h3 className="text-gray-900 font-bold text-base mb-2 leading-tight">{product.name}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-2">{product.desc}</p>
-                <button
-                  onClick={() => onNavigate('product-detail', product)}
-                  className="flex items-center gap-2 text-blue-600 font-semibold text-sm hover:text-blue-800 transition-colors"
-                >
-                  <Eye className="w-4 h-4" /> View Details <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
 
-      <Footer onNavigate={onNavigate} />
-    </div>
-  );
-}
-
-function Footer({ onNavigate }: { onNavigate: (p: string) => void }) {
-  return (
-    <footer className="bg-[#0a1628] text-gray-300 mt-8">
-      <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="text-gray-500 text-xs">&copy; 2024 Microline India. All rights reserved.</p>
-        <button
-          onClick={() => onNavigate('contact')}
-          className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-6 py-2.5 rounded tracking-wide uppercase transition-colors"
+      {/* Footer */}
+      <footer className="footer">
+        <div
+          className="container"
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            flexWrap: 'wrap',
+            paddingTop: '1.5rem',
+            paddingBottom: '1.5rem',
+          }}
         >
-          Contact Us
-        </button>
-      </div>
-    </footer>
+          <p className="text-muted small">&copy; 2024 Microline India. All rights reserved.</p>
+          <button onClick={() => onNavigate('contact')} className="btn btn-primary">
+            Contact Us
+          </button>
+        </div>
+      </footer>
+    </div>
   );
 }

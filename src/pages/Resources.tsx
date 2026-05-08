@@ -1,4 +1,4 @@
-import { Download, Play, FileText } from 'lucide-react';
+import React from 'react';
 
 interface ResourcesProps {
   onNavigate: (page: string) => void;
@@ -21,102 +21,87 @@ const videos = [
 
 export default function Resources({ onNavigate }: ResourcesProps) {
   return (
-    <div className="bg-white pt-16">
-      <div className="bg-[#0a1628] py-14 px-6 relative overflow-hidden">
+    <div className="pt-20">
+      {/* Hero */}
+      <div className="page-hero bg-gradient-dark">
         <div
-          className="absolute inset-0 bg-cover bg-center opacity-10"
-          style={{ backgroundImage: "url('https://images.pexels.com/photos/1262304/pexels-photo-1262304.jpeg?auto=compress&cs=tinysrgb&w=1200')" }}
+          className="page-hero-overlay"
+          style={{
+            backgroundImage: "url('https://images.pexels.com/photos/1262304/pexels-photo-1262304.jpeg?auto=compress&cs=tinysrgb&w=1200')",
+          }}
         />
-        <div className="relative max-w-7xl mx-auto">
-          <p className="text-blue-400 text-xs tracking-widest uppercase mb-2">
-            <button onClick={() => onNavigate('home')} className="hover:text-white">Home</button>
+        <div className="container page-hero-content">
+          <p className="small text-primary text-uppercase mb-2" style={{ letterSpacing: '1px' }}>
+            <button onClick={() => onNavigate('home')} className="breadcrumb-link">
+              Home
+            </button>
             {' / Resources'}
           </p>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-white">Resources (Catalogues &amp; Videos)</h1>
+          <h1 className="text-white display-4 font-weight-bolder">Resources (Catalogues &amp; Videos)</h1>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        {/* Catalogues */}
-        <div className="mb-16">
-          <div className="flex items-center gap-3 mb-8">
-            <FileText className="w-6 h-6 text-blue-600" />
-            <h2 className="text-2xl font-extrabold text-gray-900">
-              Catalogues &amp; <span className="text-blue-600">Brochures</span>
-            </h2>
-          </div>
-          <div className="space-y-4">
-            {catalogues.map((cat) => (
-              <div key={cat.title} className="flex items-center justify-between p-5 border border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-md transition-all duration-200 group">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-red-50 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <span className="text-red-600 font-extrabold text-xs">{cat.type}</span>
-                  </div>
-                  <div>
-                    <p className="text-gray-900 font-bold text-sm">{cat.title}</p>
-                    <p className="text-gray-500 text-xs mt-0.5">{cat.desc} • {cat.size}</p>
-                  </div>
-                </div>
-                <button className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-4 py-2 rounded transition-colors">
-                  <Download className="w-3.5 h-3.5" /> Download
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Videos */}
-        <div>
-          <div className="flex items-center gap-3 mb-8">
-            <Play className="w-6 h-6 text-blue-600" />
-            <h2 className="text-2xl font-extrabold text-gray-900">
-              Product <span className="text-blue-600">Videos</span>
-            </h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {videos.map((video) => (
-              <div key={video.title} className="group cursor-pointer rounded-xl overflow-hidden border border-gray-200 hover:shadow-lg transition-all duration-300">
-                <div className="relative h-40 overflow-hidden">
-                  <img
-                    src={video.thumb}
-                    alt={video.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center">
-                      <Play className="w-5 h-5 text-white ml-1" />
+      <div className="section py-16">
+        <div className="container">
+          {/* Catalogues */}
+          <div className="mb-16">
+            <div className="resources-heading">
+              <i className="fas fa-file-alt"></i>
+              <h2>Catalogues &amp; <span>Brochures</span></h2>
+            </div>
+            <div className="space-y-4" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              {catalogues.map((cat) => (
+                <div key={cat.title} className="catalogue-item">
+                  <div className="catalogue-info">
+                    <div className="file-badge">{cat.type}</div>
+                    <div>
+                      <p className="catalogue-title">{cat.title}</p>
+                      <p className="catalogue-meta">{cat.desc} • {cat.size}</p>
                     </div>
                   </div>
-                  <span className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-0.5 rounded">
-                    {video.duration}
-                  </span>
+                  <button className="btn btn-primary">
+                    <i className="fas fa-download mr-2"></i> Download
+                  </button>
                 </div>
-                <div className="p-4">
-                  <p className="text-gray-900 font-semibold text-sm leading-tight">{video.title}</p>
+              ))}
+            </div>
+          </div>
+
+          {/* Videos */}
+          <div>
+            <div className="resources-heading">
+              <i className="fas fa-play"></i>
+              <h2>Product <span>Videos</span></h2>
+            </div>
+            <div className="grid grid-cols-2 sm-grid-cols-2 lg-grid-cols-4 gap-6">
+              {videos.map((video) => (
+                <div key={video.title} className="video-card">
+                  <div className="video-thumb">
+                    <img src={video.thumb} alt={video.title} />
+                    <div className="video-play-overlay">
+                      <div className="video-play-btn">
+                        <i className="fas fa-play" style={{ marginLeft: '2px' }}></i>
+                      </div>
+                    </div>
+                    <span className="video-duration">{video.duration}</span>
+                  </div>
+                  <p className="video-title">{video.title}</p>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      <Footer onNavigate={onNavigate} />
+      {/* Footer */}
+      <footer className="footer">
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
+          <p className="text-muted small">&copy; 2024 Microline India. All rights reserved.</p>
+          <button onClick={() => onNavigate('contact')} className="btn btn-primary">
+            Contact Us
+          </button>
+        </div>
+      </footer>
     </div>
-  );
-}
-
-function Footer({ onNavigate }: { onNavigate: (p: string) => void }) {
-  return (
-    <footer className="bg-[#0a1628] text-gray-300 mt-8">
-      <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="text-gray-500 text-xs">&copy; 2024 Microline India. All rights reserved.</p>
-        <button
-          onClick={() => onNavigate('contact')}
-          className="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-6 py-2.5 rounded tracking-wide uppercase transition-colors"
-        >
-          Contact Us
-        </button>
-      </div>
-    </footer>
   );
 }
