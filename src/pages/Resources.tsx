@@ -230,6 +230,7 @@ export default function Resources({ onNavigate }: ResourcesProps) {
   const handleDownload = (fileUrl: string, fileName: string) => {
     const link = document.createElement('a');
     link.href = fileUrl;
+    link.target = '_blank';
     link.download = fileName;
     document.body.appendChild(link);
     link.click();
