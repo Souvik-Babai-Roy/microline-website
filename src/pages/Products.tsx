@@ -1,4 +1,8 @@
+// src/pages/Products.tsx
 import { useState } from 'react';
+import { useTheme } from "../components/ui/ThemeProvider.tsx";
+import productsHeroLight from '../assets/images/products-light.png';
+import productsHeroDark from '../assets/images/products-dark.png';
 
 interface ProductsProps {
   onNavigate: (page: string, data?: unknown) => void;
@@ -96,52 +100,40 @@ const categories = ['All', 'Microwave Test Systems', 'Antennas', 'Waveguides & A
 
 export default function Products({ onNavigate }: ProductsProps) {
   const [activeCategory, setActiveCategory] = useState('All');
+  const { isDarkMode } = useTheme();
 
   const filtered =
     activeCategory === 'All'
       ? productData
       : productData.filter((p) => p.category === activeCategory);
 
-  return (
-    <div className="pt-20">
-      {/* Hero */}
+ return (
+    <div className="pt-navbar">
       <div className="page-hero bg-gradient-dark">
         <div
           className="page-hero-overlay"
-          style={{
-            backgroundImage:
-              "url('https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=1200')",
-          }}
+          style={{ backgroundImage: `url(${isDarkMode ? productsHeroDark : productsHeroLight})` }}
         />
-        <div className="container page-hero-content">
-          <p className="small text-primary text-uppercase mb-2" style={{ letterSpacing: '1px' }}>
-            <button onClick={() => onNavigate('home')} className="breadcrumb-link">
-              Home
-            </button>
-            {' / Products'}
-          </p>
-          <h1 className="text-white display-4 font-weight-bolder">Our Products</h1>
+        <div className="container position-relative z-1">
+          <div className="d-flex align-items-center gap-2 mb-2 text-uppercase ls-2 fw-700 fs-xs">
+            <button onClick={() => onNavigate('home')} className="breadcrumb-link text-info">HOME</button>
+            <span className="text-white" style={{ opacity: 0.5 }}> / </span>
+            <span className="text-gold">PRODUCTS</span>
+          </div>
+          <h1 className="text-white fs-2xl fw-900">Our Products</h1>
         </div>
       </div>
 
-      <div className="section py-16">
+      <div className="section py-5">
         <div className="container">
-          {/* Category Filters */}
           <div className="category-filters">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`filter-btn${cat === activeCategory ? ' active' : ''}`}
-              >
-                {cat}
-              </button>
+            {categories.map(cat => (
+              <button key={cat} onClick={() => setActiveCategory(cat)} className={`filter-btn${cat === activeCategory ? ' active' : ''}`}>{cat}</button>
             ))}
           </div>
 
-          {/* Product Grid */}
-          <div className="grid sm-grid-cols-2 lg-grid-cols-3 gap-8">
-            {filtered.map((product) => (
+          <div className="grid grid-cols-3 gap-4">
+            {filtered.map(product => (
               <div key={product.id} className="product-card">
                 <div className="product-card-img">
                   <img src={product.img} alt={product.name} />
@@ -150,12 +142,8 @@ export default function Products({ onNavigate }: ProductsProps) {
                 <div className="product-card-body">
                   <h3>{product.name}</h3>
                   <p className="desc">{product.desc}</p>
-                  <button
-                    onClick={() => onNavigate('product-detail', product)}
-                    className="view-details-btn"
-                  >
-                    <i className="fas fa-eye"></i> View Details{' '}
-                    <i className="fas fa-chevron-right"></i>
+                  <button onClick={() => onNavigate('product-detail', product)} className="view-details-btn d-flex align-items-center gap-2">
+                    <i className="fas fa-eye"></i> View Details <i className="fas fa-chevron-right"></i>
                   </button>
                 </div>
               </div>
@@ -163,26 +151,6 @@ export default function Products({ onNavigate }: ProductsProps) {
           </div>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="footer">
-        <div
-          className="container"
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            flexWrap: 'wrap',
-            paddingTop: '1.5rem',
-            paddingBottom: '1.5rem',
-          }}
-        >
-          <p className="text-muted small">&copy; 2024 Microline India. All rights reserved.</p>
-          <button onClick={() => onNavigate('contact')} className="btn btn-primary">
-            Contact Us
-          </button>
-        </div>
-      </footer>
     </div>
   );
 }

@@ -1,53 +1,67 @@
+// src/pages/About.tsx
 import React from 'react';
+import { useTheme } from "../components/ui/ThemeProvider.tsx";
+import collage from '../assets/images/product-collage.png';
+import aboutHeroLight from '../assets/images/about-us-light.png';
+import aboutHeroDark from '../assets/images/about-us-dark.png';
 
-interface AboutProps {
-  onNavigate: (page: string) => void;
-}
+
+interface AboutProps { onNavigate: (page: string) => void; }
 
 export default function About({ onNavigate }: AboutProps) {
+  const { isDarkMode } = useTheme();
   return (
-    <div className="pt-20">
-      {/* Breadcrumb Hero */}
-      <div className="about-hero bg-gradient-dark">
+    <div className="pt-navbar">
+      {/* Hero */}
+      <div className="page-hero bg-gradient-dark">
         <div
-          className="about-hero-overlay"
-          style={{
-            backgroundImage:
-              "url('https://images.pexels.com/photos/1262304/pexels-photo-1262304.jpeg?auto=compress&cs=tinysrgb&w=1200')",
-          }}
+          className="page-hero-overlay"
+          style={{ backgroundImage: `url(${isDarkMode ? aboutHeroDark : aboutHeroLight})` }}
         />
-        <div className="container about-hero-content">
-          <p className="small text-primary text-uppercase mb-2" style={{ letterSpacing: '1px' }}>
-            <button onClick={() => onNavigate('home')} className="breadcrumb-link">
-              Home
+        <div className="container position-relative z-1">
+          <div className="d-flex align-items-center gap-2 mb-2 text-uppercase ls-2 fw-700 fs-xs">
+            <button
+              onClick={() => onNavigate('home')}
+              className="breadcrumb-link text-info"
+            >
+              HOME
             </button>
-            {' / About Us'}
-          </p>
-          <h1 className="text-white display-4 font-weight-bolder">About Microline India</h1>
+            <span className="text-white" style={{ opacity: 0.5 }}> / </span>
+            <span className="text-gold">ABOUT US</span>
+          </div>
+          <h1 className="text-white fs-2xl fw-900">
+            About Microline India
+          </h1>
         </div>
       </div>
 
-      <div className="section py-16">
+      <div className="section py-5">
+        {/* Who We Are */}
+        <div className="text-center">
+                <h2 className="section-title">
+                  Who <span className="text-accent">We Are</span>
+                </h2>
+              </div>
         <div className="container">
-          {/* Who We Are */}
-          <div className="grid lg-grid-cols-2 gap-12 mb-20">
+          
+          <div className="grid grid-cols-2 gap-5 mb-20">
             <div>
-              <h2 className="section-title" style={{ textAlign: 'left' }}>
-                Who We Are
-              </h2>
-              <p className="text-secondary mb-4">
-                Microline India, a name resonant with innovation in microwave technology, offers a cutting-edge technology in visualization of electromagnetic waves. Since 1997 we are providing innovative Microwave and RF solutions, advancing the technology to global reach with new heights.
-              </p>
-              <p className="text-secondary mb-4">
-                With the designing experience and innovations ideas backed by skilled manpower, Microline produces finest quality products designed in-house assuring the products to be versatile and rugged in trend with modern technologies.
-              </p>
-              <p className="text-secondary">
-                Our distinction is our satisfied customers; we take all efforts to serve them with best of our expertise.
-              </p>
+              
+              <p className="text-secondary mb-3">
+              Microline India is a trusted name in Microwave and RF technology, recognized for innovation in the visualization and analysis of electromagnetic waves. Since 1997, we have been delivering advanced Microwave and RF solutions that support academic, industrial, and research-driven applications across India.
+            </p>
+
+            <p className="text-secondary mb-3">
+              Backed by extensive design expertise, innovative engineering, and a skilled technical workforce, Microline India develops high-quality products entirely in-house. Our solutions are designed to be reliable, versatile, and aligned with evolving modern technologies and industry requirements.
+            </p>
+
+            <p className="text-secondary">
+              Our strength lies in the trust and satisfaction of our customers. We remain committed to delivering dependable solutions, technical excellence, and dedicated support through every stage of development and implementation.
+            </p>
             </div>
             <div>
               <img
-                src="https://images.pexels.com/photos/1732414/pexels-photo-1732414.jpeg?auto=compress&cs=tinysrgb&w=800"
+                src={collage}
                 alt="Microline India Office"
                 className="about-image"
               />
@@ -55,44 +69,44 @@ export default function About({ onNavigate }: AboutProps) {
           </div>
 
           {/* Stats */}
-          <div className="grid sm-grid-cols-4 gap-8 mb-20">
+          <div className="grid grid-cols-4 gap-4 mb-20">
             <div className="stats-card">
-              <i className="fas fa-award"></i>
+              <i className="fas fa-award text-glow-light"></i>
               <span className="stats-value">Since 1997</span>
               <span className="stats-label">Delivering Innovation</span>
             </div>
             <div className="stats-card">
-              <i className="fas fa-microchip"></i>
+              <i className="fas fa-microchip text-glow-light"></i>
               <span className="stats-value">In-house</span>
               <span className="stats-label">Design & Development</span>
             </div>
             <div className="stats-card">
-              <i className="fas fa-check-circle"></i>
+              <i className="fas fa-check-circle text-glow-light"></i>
               <span className="stats-value">Custom Solutions</span>
               <span className="stats-label">As Per Requirement</span>
             </div>
             <div className="stats-card">
-              <i className="fas fa-globe"></i>
+              <i className="fas fa-globe text-glow-light"></i>
               <span className="stats-value">Pan India</span>
               <span className="stats-label">Support</span>
             </div>
           </div>
 
           {/* Mission & Vision */}
-          <div className="grid md-grid-cols-2 gap-8 mb-20">
-            <div className="mission-card">
-              <h3 className="text-xl font-weight-bolder">
+          <div className="grid grid-cols-2 gap-4 mb-20">
+            <div className="mission-card bg-mesh-3 ">
+              <h3 className="fs-lg fw-800 text-gradient-ocean">
                 <i className="fas fa-bullseye mr-2"></i> Our Mission
               </h3>
-              <p>
+              <p className="text-stone">
                 To deliver world-class microwave and RF solutions that empower research institutions, defence organizations, and industries across India and beyond, through relentless innovation and unwavering commitment to quality.
               </p>
             </div>
-            <div className="vision-card">
-              <h3 className="text-xl font-weight-bolder">
+            <div className="vision-card bg-secondary-3-reverse">
+              <h3 className="fs-lg fw-800 text-platinum">
                 <i className="fas fa-eye mr-2"></i> Our Vision
               </h3>
-              <p>
+              <p className="text-charcoal">
                 To become the leading indigenous manufacturer of microwave and RF instruments in India, recognized globally for precision engineering, customer satisfaction, and technological excellence.
               </p>
             </div>
@@ -101,11 +115,11 @@ export default function About({ onNavigate }: AboutProps) {
           {/* Core Strengths */}
           <div className="text-center mb-12">
             <h2 className="section-title">
-              Our <span className="text-primary">Core Strengths</span>
+              Our <span className="text-accent">Core Strengths</span>
             </h2>
           </div>
 
-          <div className="grid sm-grid-cols-2 lg-grid-cols-3 gap-6 mb-16">
+          <div className="grid grid-cols-3 gap-4 mb-20">
             <div className="strength-card">
               <h3>In-House Design</h3>
               <p>End-to-end product design from concept to prototype, ensuring optimal performance.</p>
@@ -133,23 +147,13 @@ export default function About({ onNavigate }: AboutProps) {
           </div>
 
           {/* CTA */}
-          <div className="about-cta">
+          <div className="text-center">
             <button onClick={() => onNavigate('contact')} className="btn btn-primary">
               Get In Touch
             </button>
           </div>
         </div>
       </div>
-
-      {/* Footer */}
-      <footer className="footer">
-        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
-          <p className="text-muted small">&copy; 2024 Microline India. All rights reserved.</p>
-          <button onClick={() => onNavigate('contact')} className="btn btn-primary">
-            Contact Us
-          </button>
-        </div>
-      </footer>
     </div>
   );
 }

@@ -1,4 +1,9 @@
+// src/pages/Services.tsx
 import React from 'react';
+import { useTheme } from "../components/ui/ThemeProvider.tsx";
+import servicesHeroLight from '../assets/images/services-light.png';
+import servicesHeroDark from '../assets/images/services-dark.png';
+
 
 interface ServicesProps {
   onNavigate: (page: string) => void;
@@ -38,43 +43,36 @@ const services = [
 ];
 
 export default function Services({ onNavigate }: ServicesProps) {
+  const { isDarkMode } = useTheme();
   return (
-    <div className="pt-20">
-      {/* ============= Hero ============= */}
+    <div className="pt-navbar">
       <div className="page-hero bg-gradient-dark">
         <div
           className="page-hero-overlay"
-          style={{
-            backgroundImage:
-              "url('https://images.pexels.com/photos/2280571/pexels-photo-2280571.jpeg?auto=compress&cs=tinysrgb&w=1200')",
-          }}
+          style={{ backgroundImage: `url(${isDarkMode ? servicesHeroDark : servicesHeroLight})` }}
         />
-        <div className="container page-hero-content">
-          <p className="small text-primary text-uppercase mb-2" style={{ letterSpacing: '1px' }}>
-            <button onClick={() => onNavigate('home')} className="breadcrumb-link">
-              Home
-            </button>
-            {' / Services'}
-          </p>
-          <h1 className="text-white display-4 font-weight-bolder">Our Services</h1>
+        <div className="container position-relative z-1">
+          <div className="d-flex align-items-center gap-2 mb-2 text-uppercase ls-2 fw-700 fs-xs">
+            <button onClick={() => onNavigate('home')} className="breadcrumb-link text-info">HOME</button>
+            <span className="text-white" style={{ opacity: 0.5 }}> / </span>
+            <span className="text-gold">SERVICES</span>
+          </div>
+          <h1 className="text-white fs-2xl fw-900">Our Services</h1>
+          </div>
         </div>
-      </div>
 
-      {/* ============= Services Content ============= */}
-      <div className="section py-16">
+      <div className="section py-5">
         <div className="container">
-          {/* Intro */}
           <div className="services-intro">
             <p className="subheading">What We Do</p>
-            <h2>
-              Comprehensive <span className="highlight">RF & Microwave Services</span>
-            </h2>
-            <p>
-              From design and fabrication to lab setup and technical consultation, we provide end-to-end services for all your microwave and RF needs.
-            </p>
+              <div className="text-center">
+                <h2 className="section-title">
+                  Comprehensive <span className="text-accent">RF & Microwave Services</span>
+                </h2>
+                <p>From design and fabrication to lab setup and technical consultation...</p>
+              </div>            
           </div>
 
-          {/* Service Cards */}
           <div className="service-list">
             {services.map((service, i) => (
               <div key={service.title} className="service-card">
@@ -87,15 +85,12 @@ export default function Services({ onNavigate }: ServicesProps) {
                       <h3 className="service-title">{service.title}</h3>
                       <p className="service-desc">{service.desc}</p>
                     </div>
-                    <span className="service-number">
-                      {String(i + 1).padStart(2, '0')}
-                    </span>
+                    <span className="service-number">{String(i+1).padStart(2,'0')}</span>
                   </div>
                   <div className="service-tags">
-                    {service.highlights.map((h) => (
+                    {service.highlights.map(h => (
                       <span key={h} className="service-tag">
-                        <i className="fas fa-chevron-right" style={{ fontSize: '0.65rem' }}></i>
-                        {h}
+                        <i className="fas fa-hand-point-right"></i> {h}
                       </span>
                     ))}
                   </div>
@@ -104,26 +99,13 @@ export default function Services({ onNavigate }: ServicesProps) {
             ))}
           </div>
 
-          {/* CTA */}
-          <div className="cta-dark">
+          <div className="cta">
             <h3>Need a Custom Solution?</h3>
             <p>Talk to our experts today and let us help you achieve your goals.</p>
-            <button onClick={() => onNavigate('contact')} className="btn btn-primary">
-              Contact Us
-            </button>
+            <button onClick={() => onNavigate('contact')} className="btn btn-primary">Contact Us</button>
           </div>
         </div>
       </div>
-
-      {/* ============= Footer ============= */}
-      <footer className="footer">
-        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', paddingTop: '1.5rem', paddingBottom: '1.5rem' }}>
-          <p className="text-muted small">&copy; 2024 Microline India. All rights reserved.</p>
-          <button onClick={() => onNavigate('contact')} className="btn btn-primary">
-            Contact Us
-          </button>
-        </div>
-      </footer>
     </div>
   );
 }

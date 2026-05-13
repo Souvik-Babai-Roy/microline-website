@@ -47,12 +47,22 @@ const productCategories = [
 
 const clients = [
   { name: "DRDO", abbr: "DRDO" },
-  { name: "NIT", abbr: "NIT" },
+  { name: "NIT Durgapur", abbr: "NIT DURGAPUR" },
   { name: "TATA Consultancy Services", abbr: "TCS" },
-  { name: "Sisir Radar", abbr: "SISIR" },
-  { name: "VIT", abbr: "VIT" },
+  { name: "Sisir Radar", abbr: "SISIR RADAR" },
+  { name: "IIT Kharagpur", abbr: "IIT KHARAGPUR" },
   { name: "IEM", abbr: "IEM" },
+  { name: "NIT Goa", abbr: "NIT GOA" },
+  { name: "NIT Jamshedpur", abbr: "NIT JAMSHEDPUR" },
+  { name: "NIT Rourkela", abbr: "NIT ROURKELA" },
+  { name: "NIT Silchar", abbr: "NIT SILCHAR" },
+  { name: "NIT Warangal", abbr: "NIT WARANGAL" },
+  { name: "IIT Bhubaneswar", abbr: "IIT BHUBANESWAR" },
+  { name: "Tripura University", abbr: "TRIPURA UNIVERSITY" },
+  { name: "Calcutta University", abbr: "CALCUTTA UNIVERSITY" },
+  { name: "BIT Mesra", abbr: "BIT MESRA" },
 ];
+
 
 /* ========================================
    Why Choose
@@ -309,7 +319,7 @@ useEffect(() => {
                 onClick={() =>
                   onNavigate("contact")
                 }
-                className="btn btn-outline"
+                className="btn btn-outline bg-glass"
               >
                 Contact Us
               </button>
@@ -326,7 +336,7 @@ useEffect(() => {
            STATS BAR
         ======================================== */}
 
-        <div ref={statsRef} className="stats-bar bg-hero-overlay">
+        <div ref={statsRef} className="stats-bar bg-marble">
 
     <div className="stats-grid">
 
@@ -347,7 +357,7 @@ useEffect(() => {
       </div>
 
       <div className="stat-item">
-        <div className="stat-icon"><i className="fas fa-cogs"></i></div>
+        <div className="stat-icon"><i className="fas fa-cogs fa-spin"></i></div>
         <div className="stat-text">
           <strong><AnimatedCounter targetValue="100" suffix="%" /></strong>
           <span>In-house Development</span>
@@ -363,7 +373,7 @@ useEffect(() => {
       </div>
 
       <div className="stat-item">
-        <div className="stat-icon"><i className="fas fa-globe"></i></div>
+        <div className="stat-icon"><i className="fas fa-globe "></i></div>
         <div className="stat-text">
           <strong>Pan India</strong>
           <span>Support & Services</span>
@@ -462,24 +472,30 @@ useEffect(() => {
 
           </div>
 
-          <div className="client-logos">
+          <div className="client-logo-slider">
+  <div className="client-logo-track">
+    {clients.concat(clients).map((client, index) => (
+    <div className="client-logo-item" key={index}>
+      <img
+        src={new URL(`/src/assets/images/clients/${client.abbr}.png`, import.meta.url).href}
+        alt={client.name}
+      />
+      <div className="client-logo-name">{client.name}</div>
+    </div>
+  ))}
+    {/* duplicate the list for continuous scroll */}
+    {clients.concat(clients).map((client, index) => (
+    <div className="client-logo-item" key={index}>
+      <img
+        src={new URL(`/src/assets/images/clients/${client.abbr}.png`, import.meta.url).href}
+        alt={client.name}
+      />
+      <div className="client-logo-name">{client.name}</div>
+    </div>
+  ))}
+  </div>
+</div>
 
-            {clients.map((client) => (
-
-              <div
-                key={client.name}
-                className="client-item"
-              >
-
-                <div className="client-logo-circle">
-                  {client.abbr}
-                </div>
-
-                <p>{client.name}</p>
-
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -530,92 +546,6 @@ useEffect(() => {
         </div>
       </section>
 
-      {/* ========================================
-         FOOTER
-      ======================================== */}
-
-      <footer className="footer">
-
-        <div className="container">
-
-          <div className="footer-grid">
-
-            <div className="footer-section">
-
-              <h4>About Microline</h4>
-
-              <p>
-                Leading provider of microwave
-                and RF solutions with decades
-                of engineering excellence.
-              </p>
-
-            </div>
-
-            <div className="footer-section">
-
-              <h4>Quick Links</h4>
-
-              <ul>
-
-                <li>
-                  <button
-                    onClick={() =>
-                      onNavigate("about")
-                    }
-                  >
-                    About Us
-                  </button>
-                </li>
-
-                <li>
-                  <button
-                    onClick={() =>
-                      onNavigate("products")
-                    }
-                  >
-                    Products
-                  </button>
-                </li>
-
-                <li>
-                  <button
-                    onClick={() =>
-                      onNavigate("services")
-                    }
-                  >
-                    Services
-                  </button>
-                </li>
-
-              </ul>
-            </div>
-
-            <div className="footer-section">
-
-              <h4>Contact Info</h4>
-
-              <p>
-                Kolkata, West Bengal, India
-              </p>
-
-              <p>
-                sales@microlineindia.com
-              </p>
-
-            </div>
-          </div>
-
-          <div className="footer-bottom">
-
-            <p>
-              © 2026 Microline India.
-              All rights reserved.
-            </p>
-
-          </div>
-        </div>
-      </footer>
     </>
   );
 }
