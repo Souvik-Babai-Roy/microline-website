@@ -129,7 +129,7 @@ const EnterpriseVideoPlayer: React.FC<VideoPlayerProps> = ({ url, fallbackUrl, p
         hls.loadSource(url);
         hls.attachMedia(video);
         hls.on(window.Hls.Events.MANIFEST_PARSED, () => mounted && setLoading(false));
-        hls.on(window.Hls.Events.ERROR, (_, data) => {
+        hls.on(window.Hls.Events.ERROR, (_: any, data: { fatal: any; }) => {
           if (data.fatal && mounted) {
             console.error('HLS fatal error', data);
             if (fallbackUrl) {
