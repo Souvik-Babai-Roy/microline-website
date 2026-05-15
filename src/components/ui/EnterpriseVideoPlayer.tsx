@@ -70,7 +70,7 @@ export default function EnterpriseVideoPlayer({ url, fallbackUrl, poster }: Prop
           console.log('HLS manifest parsed');
           if (mounted) setLoading(false);
         });
-        hls.on(Hls.Events.ERROR, (_, data) => {
+        hls.on(Hls.Events.ERROR, (_: any, data: { fatal: any; type: string; }) => {
           console.error('HLS error:', data);
           if (data.fatal && mounted && fallbackUrl) {
             if (hls) hls.destroy();
