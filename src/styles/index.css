@@ -5272,6 +5272,14 @@ textarea.form-input {
   animation: loadingDots 1.25s steps(4, end) infinite;
 }
 
+.loading-page {
+  min-height: calc(100vh - 74px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-primary);
+}
+
 /* Error state wrapper */
 .error-container {
   min-height: calc(100vh - 74px);

@@ -54,7 +54,7 @@ export default function ProductDetail({ onNavigate }: ProductDetailProps) {
   const productFromState = location.state?.product as CMSProduct | undefined;
   const slug = location.pathname.split("/").pop();
   const productFromSlug = allProducts.find((p) => p.slug === slug);
-  const p = productFromState || productFromSlug || allProducts[0];
+  const p = productFromState || productFromSlug || allProducts[0] || null;
 
   // Dynamic tabs (excluding "Features")
   const tabs = useMemo(() => {
@@ -335,37 +335,17 @@ export default function ProductDetail({ onNavigate }: ProductDetailProps) {
     });
   }, [scale, translate, imageModalOpen]);
 
-  const minimapThumbSrc = p?.image?.url;
+  const minimapThumbSrc = p?.image?.url || "";
 
   // =========================================================
 
-  if (loading)
-    return (
-      <div className="pt-navbar flex justify-center items-center h-screen">
-        Loading...
-      </div>
-    );
+    const features = p ? getFeatures(p) : [];
+    const brochureUrl = p?.brochure?.url;
 
-  if (error)
-    return (
-      <div className="pt-navbar flex justify-center items-center h-screen text-red-500">
-        Error loading product.
-      </div>
-    );
-
-  if (!p)
-    return (
-      <div className="pt-navbar flex justify-center items-center h-screen">
-        Product not found.
-      </div>
-    );
-
-  const features = getFeatures(p);
-  const brochureUrl = p.brochure?.url;
-  const activeTab = tabs[activeTabIndex];
-  const activeSection = activeTab
-    ? p.sections.find((s) => s.id === activeTab.id)
-    : null;
+    const activeTab = tabs[activeTabIndex];
+    const activeSection = activeTab && p
+      ? p.sections.find((s) => s.id === activeTab.id)
+      : null;
 
   // Sync accordion with selected tab when mobile
   useEffect(() => {
@@ -373,6 +353,77 @@ export default function ProductDetail({ onNavigate }: ProductDetailProps) {
       setOpenAccordionId(activeTab.id);
     }
   }, [isMobile, activeTab?.id]);
+
+
+// Loading state
+if (loading) {
+  return (
+    <div className="pt-navbar">
+      <div className="loading-overlay" role="status" aria-live="polite">
+        <div className="loading-container">
+          <div className="loading-ring" aria-hidden="true"></div>
+
+          <div className="loading-content">
+            <h3 className="loading-title">Loading product details</h3>
+            <p className="loading-message">
+              Please wait while we fetch the information
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Error state (with retry)
+if (error) {
+  return (
+    <div className="pt-navbar">
+      <div className="error-container">
+        <div className="error-card">
+          <div className="error-icon">
+            <i className="fas fa-exclamation-triangle"></i>
+          </div>
+          <h2 className="error-title">Unable to load product</h2>
+          <p className="error-message">
+            Something went wrong while fetching the product data. Please try
+            again.
+          </p>
+          <button
+            className="btn btn-primary error-retry-btn"
+            onClick={() => window.location.reload()}
+          >
+            <i className="fas fa-redo-alt me-2"></i> Retry
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Not found state (with navigation back to products)
+if (!p) {
+  return (
+    <div className="pt-navbar">
+      <div className="error-container">
+        <div className="error-card">
+          <div className="error-icon">
+            <i className="fas fa-box-open"></i>
+          </div>
+          <h2 className="error-title">Product not found</h2>
+          <p className="error-message">
+            The product you are looking for does not exist or may have been
+            removed.
+          </p>
+          <button className="btn btn-outline" onClick={() => onNavigate("products")}>
+            <i className="fas fa-arrow-left me-2"></i> Back to Products
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 
   return (
     <div className="pt-navbar">
