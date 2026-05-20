@@ -17,6 +17,7 @@ const Applications = lazy(() => import("./pages/Applications"));
 const Achievements = lazy(() => import("./pages/Achievements"));
 const Resources = lazy(() => import("./pages/Resources"));
 const Contact = lazy(() => import("./pages/Contact"));
+const NotFound = lazy(() => import("./pages/NotFound")); // ← new
 
 const EnterprisePageLoader = () => (
   <div className="suspense-loader-wrapper">
@@ -70,6 +71,9 @@ export default function App() {
               <Route path="/achievements" element={<Achievements onNavigate={navigateTo} />} />
               <Route path="/resources" element={<Resources onNavigate={navigateTo} />} />
               <Route path="/contact" element={<Contact onNavigate={navigateTo} />} />
+
+              {/* 404 catch‑all – must be the LAST Route */}
+              <Route path="*" element={<NotFound onNavigate={navigateTo} />} />
             </Routes>
           </Suspense>
         </motion.main>
