@@ -1,134 +1,544 @@
 # Microline Website
 
-Microline (www.microlineindia.in) — production React + TypeScript website built with Vite. This repository contains the complete front-end application and a serverless contact API used by the live site.
+**Microline** — https://www.microlineindia.in
 
-Live website: https://www.microlineindia.in
+A production-ready **React + TypeScript** website built with **Vite**. This repository contains the complete frontend application and a serverless contact API powering the live website.
 
-IMPORTANT: Proprietary code and distribution restrictions
+🌐 **Live Website:** https://www.microlineindia.in
 
-This repository contains proprietary source code for a professional, client-facing website. Do NOT copy, fork, distribute, mirror, or otherwise share or use this repository's contents without explicit, written permission from the repository owner. The code, assets, and configuration are intended for internal development and deployment only.
+---
 
-## Tech stack
+# ⚠️ Proprietary Software Notice
 
-- React 18 + TypeScript
-- Vite for dev server and build
-- Tailwind / PostCSS (project includes PostCSS tooling)
-- DatoCMS for content (graphql-request)
-- Axios for API calls
-- Serverless function in `functions/contactApi`
+This repository contains proprietary source code, assets, and configuration files developed for a professional, client-facing website.
 
-## Prerequisites
+**Unauthorized copying, forking, distribution, mirroring, modification, reverse engineering, or commercial use of any part of this repository is strictly prohibited without prior written permission from the repository owner.**
 
-- Node.js 18+ (LTS recommended)
-- npm or yarn
+The contents of this repository are intended exclusively for:
 
-## Quick start
+* Internal development
+* Maintenance
+* Testing
+* Deployment
 
-1. Install dependencies
+All rights are reserved.
+
+---
+
+# Table of Contents
+
+* [Technology Stack](#technology-stack)
+* [Prerequisites](#prerequisites)
+* [Quick Start](#quick-start)
+* [Available Scripts](#available-scripts)
+* [Environment Variables](#environment-variables)
+* [Project Structure](#project-structure)
+* [Architecture Overview](#architecture-overview)
+* [Deployment](#deployment)
+* [Deployment Notes](#deployment-notes)
+* [Access Control & Contribution Policy](#access-control--contribution-policy)
+* [Security Guidelines](#security-guidelines)
+* [Maintenance Workflow](#maintenance-workflow)
+* [Support & Contacts](#support--contacts)
+* [License & Usage Restrictions](#license--usage-restrictions)
+
+---
+
+# Technology Stack
+
+## Frontend
+
+* **React 18**
+* **TypeScript**
+* **Vite**
+* **Tailwind CSS**
+* **PostCSS**
+
+## Content Management
+
+* **DatoCMS**
+* `graphql-request`
+
+## API Layer
+
+* **Axios**
+* Serverless Contact API
+
+## Security
+
+* Cloudflare Turnstile
+
+---
+
+# Prerequisites
+
+Before running the project, ensure the following are installed:
+
+| Requirement | Version               |
+| ----------- | --------------------- |
+| Node.js     | 18+ (LTS recommended) |
+| npm         | Latest                |
+| Yarn        | Optional              |
+
+Verify installation:
+
+```bash
+node -v
+npm -v
+```
+
+---
+
+# Quick Start
+
+## 1. Install Dependencies
+
+Using npm:
 
 ```bash
 npm install
-# or
+```
+
+Using Yarn:
+
+```bash
 yarn
 ```
 
-2. Create environment variables
+---
 
-Copy the example file and fill in secrets:
+## 2. Configure Environment Variables
+
+Create a local environment file:
 
 ```bash
 cp .env.example .env
 ```
 
-3. Run the development server
+Populate the file with the required secrets and configuration values.
+
+> **Important:** Never commit `.env` files containing real credentials.
+
+---
+
+## 3. Start Development Server
+
+Using npm:
 
 ```bash
 npm run dev
-# or
+```
+
+Using Yarn:
+
+```bash
 yarn dev
 ```
 
-4. Build for production
+---
+
+## 4. Build Production Bundle
 
 ```bash
 npm run build
 ```
 
-5. Preview the production build locally
+---
+
+## 5. Preview Production Build
 
 ```bash
 npm run preview
 ```
 
-## Available scripts
+---
 
-- `dev` — Run the Vite development server
-- `build` — Type-check and build the production bundle
-- `preview` — Preview production build locally
-- `lint` — Run ESLint and auto-fix
-- `format` — Run Prettier to format files
-- `security-check` — Run `npm audit`
+# Available Scripts
 
-## Environment variables
-
-This project uses Vite env vars (prefixed with `VITE_`). Example variables used in the codebase:
-
-- `VITE_DATO_API_TOKEN` — DatoCMS read-only API token used by `src/lib/datocms.ts`
-- `VITE_DATO_ENVIRONMENT` — DatoCMS environment (e.g. `main`)
-- `VITE_API_BASE_URL` — Base URL for contact API used by `src/services/api.ts`
-- `VITE_TURNSTILE_SITE_KEY` — Cloudflare Turnstile site key used on the contact page
-
-Create a `.env` file in the project root (copy from `.env.example`) and keep secrets out of source control.
-
-See [.env.example](.env.example) for a starter template.
-
-## Project structure (important files)
-
-- `src/` — Frontend source code
-  - `src/pages/` — Route pages (Home, Products, Contact, etc.)
-  - `src/components/` — Reusable UI components
-  - `src/lib/datocms.ts` — DatoCMS GraphQL client
-  - `src/services/api.ts` — Axios instance and API helpers
-- `functions/contactApi` — Serverless contact API handler
-- `public/` — Static assets
-
-## Deployment & hosting (overview)
-
-- Production site is served at https://www.microlineindia.in. Deploy the static build (`dist/`) to your CDN or static host and expose the serverless function endpoint used by the contact form.
-- Typical steps:
-  1. Build: `npm run build`
-  2. Deploy `dist/` to your host (Vercel, Netlify, S3 + CloudFront, etc.)
-  3. Deploy `functions/contactApi` to your platform's functions provider or configure an API endpoint that matches `VITE_API_BASE_URL`.
-
-## Access control & contribution
-
-This repository is not open for public contributions. If you are a contractor or collaborator, obtain explicit access and instructions from the repository owner. Any proposed changes must be submitted through the owner-managed review process.
-
-If you are delivering updates for deployment, provide only compiled artifacts and deployment instructions unless the owner authorizes source-level sharing.
-
-## Deployment notes
-
-- Static site: build with `npm run build`, then deploy the contents of `dist/` to your static host (Netlify, Vercel, Surge, etc.).
-- Functions: if you deploy to a platform that supports serverless functions, deploy `functions/contactApi` accordingly. The project contains a Catalyst config at `functions/contactApi/catalyst-config.json`.
-
-## Security
-
-- Never commit your `.env` with secrets. Use `.env.example` for variable names and placeholders.
-- Rotate API tokens if you suspect they were exposed.
-
-## Contacts
-
-- Repository owner / site administrator: [Contact internally]
-- For urgent security or production incidents, contact the site administrator directly and do not post sensitive information in public channels.
-
-## Contributing
-
-Open a PR for changes. Run `npm run lint` and `npm run format` before submitting.
-
-## License
-
-This project does not include a license file. Add one if you plan to publish or share this repository.
+| Script           | Description                                              |
+| ---------------- | -------------------------------------------------------- |
+| `dev`            | Start the Vite development server                        |
+| `build`          | Run TypeScript type-check and generate production bundle |
+| `preview`        | Preview the production build locally                     |
+| `lint`           | Run ESLint with auto-fix                                 |
+| `format`         | Format files using Prettier                              |
+| `security-check` | Execute `npm audit`                                      |
 
 ---
 
-If you'd like, I can also create a short deployment checklist or add CI scripts next.
+# Environment Variables
+
+This project uses **Vite environment variables**, which must begin with the `VITE_` prefix.
+
+Create a `.env` file by copying:
+
+```bash
+cp .env.example .env
+```
+
+## Supported Variables
+
+| Variable                  | Description                       |
+| ------------------------- | --------------------------------- |
+| `VITE_DATO_API_TOKEN`     | DatoCMS read-only API token       |
+| `VITE_DATO_ENVIRONMENT`   | DatoCMS environment (e.g. `main`) |
+| `VITE_API_BASE_URL`       | Base URL of the Contact API       |
+| `VITE_TURNSTILE_SITE_KEY` | Cloudflare Turnstile site key     |
+
+### Security Recommendations
+
+* Never commit `.env`.
+* Store secrets in your hosting platform.
+* Rotate API keys immediately if exposure is suspected.
+* Use `.env.example` only as a template.
+
+See:
+
+```text
+.env.example
+```
+
+for sample values and placeholders.
+
+---
+
+# Project Structure
+
+```text
+microline-website/
+│
+├── src/
+│   ├── pages/                 # Route pages
+│   │   ├── Home
+│   │   ├── Products
+│   │   ├── Contact
+│   │   └── ...
+│   │
+│   ├── components/            # Reusable UI components
+│   │
+│   ├── lib/
+│   │   └── datocms.ts         # DatoCMS GraphQL client
+│   │
+│   ├── services/
+│   │   └── api.ts             # Axios instance and API helpers
+│   │
+│   └── ...
+│
+├── functions/
+│   └── contactApi/
+│       ├── catalyst-config.json
+│       └── ...
+│
+├── public/                    # Static assets
+├── .env.example
+├── vite.config.ts
+├── package.json
+└── ...
+```
+
+---
+
+# Architecture Overview
+
+```text
+Browser
+   │
+   ▼
+React + TypeScript UI
+   │
+   ├── Axios API Services
+   │
+   ▼
+Serverless Contact API
+   │
+   ▼
+Backend Services
+
+Content Pages
+   │
+   ▼
+DatoCMS GraphQL API
+```
+
+---
+
+# Deployment
+
+The production website is available at:
+
+**https://www.microlineindia.in**
+
+## Step 1 — Build
+
+```bash
+npm run build
+```
+
+This generates the optimized production bundle inside:
+
+```text
+dist/
+```
+
+---
+
+## Step 2 — Deploy Static Assets
+
+Deploy the contents of:
+
+```text
+dist/
+```
+
+to a static hosting platform such as:
+
+* Vercel
+* Netlify
+* AWS S3 + CloudFront
+* Azure Static Web Apps
+* Cloudflare Pages
+* Firebase Hosting
+
+---
+
+## Step 3 — Deploy Serverless Functions
+
+Deploy:
+
+```text
+functions/contactApi
+```
+
+to your functions provider.
+
+Examples:
+
+* Netlify Functions
+* Vercel Functions
+* AWS Lambda
+* Zoho Catalyst
+* Azure Functions
+
+Ensure:
+
+```env
+VITE_API_BASE_URL
+```
+
+points to the deployed API endpoint.
+
+---
+
+# Deployment Notes
+
+### Static Site
+
+Build and deploy:
+
+```bash
+npm run build
+```
+
+Upload the entire:
+
+```text
+dist/
+```
+
+directory.
+
+---
+
+### Serverless Contact API
+
+Deploy:
+
+```text
+functions/contactApi
+```
+
+to your platform's serverless environment.
+
+The repository contains:
+
+```text
+functions/contactApi/catalyst-config.json
+```
+
+which is specific to **Zoho Catalyst** and may require modification for other platforms.
+
+---
+
+### Environment Variables
+
+Environment variables should be configured:
+
+* Locally via `.env`
+* In CI/CD pipelines
+* Within hosting platform settings
+
+---
+
+# Access Control & Contribution Policy
+
+## Public Contributions
+
+This repository is **not open-source** and does not accept public contributions.
+
+---
+
+## Internal Contributors
+
+Authorized collaborators must:
+
+1. Obtain access from the repository owner.
+2. Follow the owner-managed review process.
+3. Submit changes through pull requests.
+4. Wait for approval before merging.
+
+---
+
+## Contractors
+
+Contractors should provide:
+
+* Compiled artifacts
+* Deployment instructions
+
+Source-level distribution requires explicit authorization.
+
+---
+
+# Security Guidelines
+
+## Secrets
+
+Never commit:
+
+* `.env`
+* API keys
+* Access tokens
+* Credentials
+
+---
+
+## Token Exposure
+
+Immediately rotate:
+
+* DatoCMS API tokens
+* Cloudflare keys
+* Serverless secrets
+
+if exposure is suspected.
+
+---
+
+## Repository Confidentiality
+
+Keep all:
+
+* Source code
+* Assets
+* Configuration files
+* Deployment settings
+
+private and accessible only to authorized personnel.
+
+---
+
+# Maintenance Workflow
+
+Before submitting updates:
+
+## Format Code
+
+```bash
+npm run format
+```
+
+---
+
+## Run Linting
+
+```bash
+npm run lint
+```
+
+---
+
+## Security Audit
+
+```bash
+npm run security-check
+```
+
+---
+
+## Verify Production Build
+
+```bash
+npm run build
+```
+
+---
+
+## Submit Pull Request
+
+Wait for review and approval from the repository owner.
+
+---
+
+# Support & Contacts
+
+### Repository Owner / Site Administrator
+
+**Internal contact only — not published in the public README.**
+
+---
+
+### Security or Production Incidents
+
+For urgent issues:
+
+* Contact the site administrator directly.
+* Do not disclose credentials or sensitive information through public channels.
+* Avoid posting incident details publicly.
+
+---
+
+# License & Usage Restrictions
+
+This repository does not currently include a public license file.
+
+Until a license is explicitly provided:
+
+## All Rights Reserved
+
+The source code, assets, and configuration files remain proprietary and are protected by applicable copyright laws.
+
+No part of this repository may be:
+
+* Copied
+* Forked
+* Reproduced
+* Distributed
+* Modified
+* Republished
+* Used commercially
+
+without prior written permission from the repository owner.
+
+---
+
+<div align="center">
+
+### Microline Website
+
+Production React + TypeScript application powered by Vite.
+
+**Maintained for Microline India**
+
+*Internal Use Only*
+
+</div>
