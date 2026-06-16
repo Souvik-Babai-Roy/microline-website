@@ -1,6 +1,6 @@
 # Microline Website
 
-Microline (www.microlineindia.in) — production React + TypeScript website built with Vite. This repository contains the complete front-end application and a serverless contact API used by the live site.
+Microline [www.microlineindia.in] — production React + TypeScript website built with Vite. This repository contains the complete front-end application and a serverless contact API used by the live site.
 
 Live website: https://www.microlineindia.in
 
